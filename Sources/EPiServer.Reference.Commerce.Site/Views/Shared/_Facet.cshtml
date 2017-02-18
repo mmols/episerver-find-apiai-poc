@@ -21,7 +21,7 @@
                         <li class="facet-active">
                             <label class="btn btn-default btn-sm">
                                     @Html.CheckBox(string.Format("FilterOption.FacetGroups[{0}].Facets[{1}].Selected", i, j),
-                                    new { @class = "jsSearchFacet", @style = "position: absolute;z-index: -100;", data_facetkey = @facet.Key, @checked = "checked" })
+                                    new { @class = "jsSearchFacet", @style = "position: absolute;z-index: -100;", data_facetkey = @facet.Key, data_facetgroupname = @facetGroup.GroupName, @checked = "checked" })
                                     @facet.Name <span class="glyphicon glyphicon-remove"></span>
                             </label>
                             @Html.TextBox(string.Format("FilterOption.FacetGroups[{0}].Facets[{1}].Key", i, j), facet.Key, new { @hidden = "true" })
@@ -63,7 +63,7 @@
                     <label style="font-weight: normal; display: block;">
                         @Html.CheckBox(string.Format("FilterOption.FacetGroups[{0}].Facets[{1}].Selected", i, j),
                     facet.Selected,
-                    new { @class = "jsSearchFacet", @style = "position: absolute;z-index: -100;", data_facetkey = @facet.Key })
+                    new { @class = "jsSearchFacet", @style = "position: absolute;z-index: -100;", data_facetkey = @facet.Key, data_facetgroupname = @facetGroup.GroupName })
                         @facet.Name <span class="counter counter--medium">@facet.Count</span>
                     </label>
                     @Html.TextBox(string.Format("FilterOption.FacetGroups[{0}].Facets[{1}].Key", i, j), facet.Key, new { @hidden = "true" })

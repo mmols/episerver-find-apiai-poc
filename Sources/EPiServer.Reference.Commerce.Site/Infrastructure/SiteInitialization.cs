@@ -24,6 +24,13 @@ using System.Web.Http;
 using System.Web.Mvc;
 using System.Web.Routing;
 using System.Web.WebPages;
+using EPiServer.Find.ClientConventions;
+using EPiServer.Reference.Commerce.Site.Features.Search.Services;
+using EPiServer.Find.Cms;
+using EPiServer.Find.Cms.Conventions;
+using EPiServer.Find.Framework;
+using EPiServer.Reference.Commerce.Site.Features.Product.Extensions;
+using EPiServer.Reference.Commerce.Site.Features.Product.Models;
 
 namespace EPiServer.Reference.Commerce.Site.Infrastructure
 {
@@ -67,8 +74,13 @@ namespace EPiServer.Reference.Commerce.Site.Infrastructure
 
             services.AddTransient<IOrderGroupCalculator, SiteOrderGroupCalculator>(); // TODO: should remove this configuration and calculator class after COM-2434 was resolved
             services.AddTransient<IOrderFormCalculator, SiteOrderFormCalculator>(); // TODO: should remove this configuration and calculator class after COM-2434 was resolved
+            services.AddTransient<ISearchService, FindSearchService>();
 
-            
+            SearchClient.Instance.Conventions
+                .ForInstancesOf<FashionProduct>()
+                .IncludeField(x => x.Gender())
+                .IncludeField(x => x.CategoryCode());
+
             services.AddTransient<IOwinContext>(locator => HttpContext.Current.GetOwinContext());
             services.AddTransient<ApplicationUserManager>(locator => locator.GetInstance<IOwinContext>().GetUserManager<ApplicationUserManager>());
             services.AddTransient<ApplicationSignInManager>(locator => locator.GetInstance<IOwinContext>().Get<ApplicationSignInManager>());

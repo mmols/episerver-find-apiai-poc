@@ -142,8 +142,7 @@ namespace EPiServer.Reference.Commerce.Site.Tests.Features.Search.Models
                 .Setup(s => s.Search(It.IsAny<IContent>(), It.IsAny<FilterOptionViewModel>()))
                 .Returns(new CustomSearchResult() { 
                     FacetGroups = Enumerable.Empty<FacetGroupOption>(),
-                    ProductViewModels = _productViewModels,
-                    SearchResult = _searchResultsMock.Object});
+                    ProductViewModels = _productViewModels});
 
             _subject = new SearchViewModelFactory(new MemoryLocalizationService(), _searchServiceMock.Object);
         }

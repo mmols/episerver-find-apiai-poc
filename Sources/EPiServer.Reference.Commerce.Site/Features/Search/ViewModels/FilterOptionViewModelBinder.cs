@@ -98,115 +98,28 @@ namespace EPiServer.Reference.Commerce.Site.Features.Search.ViewModels
             {
                 return facetGroups;
             }
-            foreach (var facet in facets.Split(new[] { ',' }, System.StringSplitOptions.RemoveEmptyEntries))
+            foreach (var rawFacet in facets.Split(new[] { ',' }, System.StringSplitOptions.RemoveEmptyEntries))
             {
-                var searchFilter = GetSearchFilter(facet);
-                if (searchFilter != null)
+                var parsedFacet = rawFacet.Split(new[] {':'}, System.StringSplitOptions.RemoveEmptyEntries);
+
+                var facetGroupName = parsedFacet[0];
+                var facetKey = parsedFacet[1];
+               
+                var facetGroup = new FacetGroupOption();
+                facetGroup.GroupName = facetGroupName;
+                facetGroup.GroupFieldName = facetGroupName;
+                facetGroup.Facets = new List<FacetOption>();
+                facetGroup.Facets.Add(new FacetOption()
                 {
-                    var facetGroup = facetGroups.FirstOrDefault(fg => fg.GroupFieldName == searchFilter.field);
-                    if (facetGroup == null)
-                    {
-                        facetGroup = CreateFacetGroup(searchFilter);
-                        facetGroups.Add(facetGroup);
-                    }
-                    var facetOption = facetGroup.Facets.FirstOrDefault(fo => fo.Name == facet);
-                    if (facetOption == null)
-                    {
-                        facetOption = CreateFacetOption(facet);
-                        facetGroup.Facets.Add(facetOption);
-                    }
-                }
-            }
-            var nodeContent = content as NodeContent;
-            if (nodeContent == null)
-            {
-                return facetGroups;
-            }
-            var filter = GetSearchFilterForNode(nodeContent);
-            var selectedFilters = facets.Split(new[] { ',' }, System.StringSplitOptions.RemoveEmptyEntries);
-            var nodeFacetValues = filter.Values.SimpleValue.Where(x => selectedFilters.Any(y => y.ToLower().Equals(x.key.ToLower())));
-            if (!nodeFacetValues.Any())
-            {
-                return facetGroups;
-            }
-            var nodeFacet = CreateFacetGroup(filter);
+                    Name = facetKey,
+                    Key = facetKey,
+                    Selected = true
+                });
 
-            foreach (var nodeFacetValue in nodeFacetValues)
-            {
-                nodeFacet.Facets.Add(CreateFacetOption(nodeFacetValue.value));
+                facetGroups.Add(facetGroup);
             }
 
-            facetGroups.Add(nodeFacet);
             return facetGroups;
-        }
-
-        private SearchFilter GetSearchFilter(string facet)
-        {
-            return SearchFilterHelper.Current.SearchConfig.SearchFilters.FirstOrDefault(filter =>
-                filter.Values.SimpleValue.Any(value =>
-                    string.Equals(value.value, facet, System.StringComparison.InvariantCultureIgnoreCase)));
-        }
-
-        private FacetGroupOption CreateFacetGroup(SearchFilter searchFilter)
-        {
-            return new FacetGroupOption
-            {
-                GroupFieldName = searchFilter.field,
-                Facets = new List<FacetOption>()
-            };
-        }
-
-        private FacetOption CreateFacetOption(string facet)
-        {
-            return new FacetOption { Name = facet, Key = facet, Selected = true };
-        }
-
-        public SearchFilter GetSearchFilterForNode(NodeContent nodeContent)
-        {
-            var configFilter = new SearchFilter
-            {
-                field = BaseCatalogIndexBuilder.FieldConstants.Node,
-                Descriptions = new Descriptions
-                {
-                    defaultLocale = _languageResolver.GetPreferredCulture().Name
-                },
-                Values = new SearchFilterValues()
-            };
-
-            var desc = new Description
-            {
-                locale = "en",
-                Value = _localizationService.GetString("/Facet/Category")
-            };
-            configFilter.Descriptions.Description = new[] { desc };
-
-            var nodes = _contentLoader.GetChildren<NodeContent>(nodeContent.ContentLink).ToList();
-            var nodeValues = new SimpleValue[nodes.Count];
-            var index = 0;
-            var preferredCultureName = _languageResolver.GetPreferredCulture().Name;
-            foreach (var node in nodes)
-            {
-                var val = new SimpleValue
-                {
-                    key = node.Code,
-                    value = node.Code,
-                    Descriptions = new Descriptions
-                    {
-                        defaultLocale = preferredCultureName
-                    }
-                };
-                var desc2 = new Description
-                {
-                    locale = preferredCultureName,
-                    Value = node.DisplayName
-                };
-                val.Descriptions.Description = new[] { desc2 };
-
-                nodeValues[index] = val;
-                index++;
-            }
-            configFilter.Values.SimpleValue = nodeValues;
-            return configFilter;
         }
     }
 }

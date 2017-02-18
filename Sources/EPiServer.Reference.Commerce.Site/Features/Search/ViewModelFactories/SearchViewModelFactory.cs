@@ -1,10 +1,15 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Web.Mvc;
 using EPiServer.Core;
 using EPiServer.Framework.Localization;
 using Mediachase.Search;
 using EPiServer.Reference.Commerce.Site.Features.Search.Services;
 using EPiServer.Reference.Commerce.Site.Features.Search.ViewModels;
+using ApiAiSDK;
+using ApiAiSDK.Model;
+using EPiServer.Reference.Commerce.Site.Features.Search.Models;
+using System.Configuration;
 
 namespace EPiServer.Reference.Commerce.Site.Features.Search.ViewModelFactories
 {
@@ -32,9 +37,25 @@ namespace EPiServer.Reference.Commerce.Site.Features.Search.ViewModelFactories
                 };
             }
 
+            if (!String.IsNullOrEmpty(viewModel.Q))
+            {
+                var config = new AIConfiguration(ConfigurationManager.AppSettings["api-ai-key"], SupportedLanguage.English);
+                var apiAi = new ApiAi(config);
+                var response = apiAi.TextRequest(viewModel.Q);
+
+                if (response.Result.HasParameters)
+                {
+                    viewModel.Q = String.Empty;
+                    AddFacet("AvailableColors", response.Result.GetStringParameter("color"), viewModel);
+                    AddFacet("Brand", response.Result.GetStringParameter("brand"), viewModel);
+                    AddFacet("Gender", response.Result.GetStringParameter("gender"), viewModel);
+                    AddFacet("CategoryCode", response.Result.GetStringParameter("product-category"), viewModel);
+                }
+            }
+
             var customSearchResult = _searchService.Search(currentContent, viewModel);
 
-            viewModel.TotalCount = customSearchResult.SearchResult != null ? customSearchResult.SearchResult.TotalCount : 0;
+            viewModel.TotalCount = customSearchResult.TotalCount;
             viewModel.FacetGroups = customSearchResult.FacetGroups.ToList();
 
             viewModel.Sorting = _searchService.GetSortOrder().Select(x => new SelectListItem
@@ -48,10 +69,31 @@ namespace EPiServer.Reference.Commerce.Site.Features.Search.ViewModelFactories
             {
                 CurrentContent = currentContent,
                 ProductViewModels = customSearchResult.ProductViewModels,
-                Facets = customSearchResult.SearchResult != null ? customSearchResult.SearchResult.FacetGroups : new ISearchFacetGroup[0],
                 FilterOption = viewModel
             };
         }
 
+        private FacetGroupOption AddFacet(string facetName, string facetValue, FilterOptionViewModel viewModel)
+        {
+            if (!string.IsNullOrEmpty(facetValue))
+            {
+                if (viewModel.FacetGroups.FirstOrDefault(x => x.GroupFieldName == facetName) == null)
+                {
+                    var prefilledFacet = new Models.FacetGroupOption()
+                    {
+                        GroupFieldName = facetName,
+                        GroupName = facetName,
+                        Facets =
+                            new System.Collections.Generic.List<Models.FacetOption>()
+                            {
+                                new Models.FacetOption() {Key = facetValue, Name = facetValue, Selected = true}
+                            }
+                    };
+                    viewModel.FacetGroups.Add(prefilledFacet);
+                }
+            }
+
+            return null;
+        }
     }
 }

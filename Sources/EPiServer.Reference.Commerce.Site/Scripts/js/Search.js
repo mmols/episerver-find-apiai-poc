@@ -95,7 +95,9 @@
     getUrlWithFacets: function () {
         var facets = [];
         $('.jsSearchFacet:input:checked').each(function () {
-            var selectedFacet = encodeURIComponent($(this).data('facetkey'));
+            var facetKey = $(this).data('facetkey');
+            var facetGroup = $(this).data('facetgroupname');
+            var selectedFacet = encodeURIComponent(facetGroup + ":" + facetKey);
             facets.push(selectedFacet);
         });
         return Search.getUrl(facets);

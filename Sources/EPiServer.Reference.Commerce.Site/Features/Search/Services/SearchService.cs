@@ -57,7 +57,7 @@ namespace EPiServer.Reference.Commerce.Site.Features.Search.Services
             _localizationService = localizationService;
         }
 
-        public CustomSearchResult Search(IContent currentContent, FilterOptionViewModel filterOptions)
+        public virtual CustomSearchResult Search(IContent currentContent, FilterOptionViewModel filterOptions)
         {
             if (filterOptions == null)
             {
@@ -145,7 +145,7 @@ namespace EPiServer.Reference.Commerce.Site.Features.Search.Services
                 MarketId = market.MarketId,
                 StartingRecord = pageSize * (filterOptions.Page - 1),
                 RecordsToRetrieve = pageSize,
-                Sort = new SearchSort(new SearchSortField(sortOrder.Key, sortOrder.SortDirection == SortDirection.Descending))
+                Sort = new SearchSort(new SearchSortField(sortOrder.Key, sortOrder.SortDirection == SortDirection.Descending)),
             };
             
             var nodeContent = currentContent as NodeContent;
@@ -194,10 +194,6 @@ namespace EPiServer.Reference.Commerce.Site.Features.Search.Services
             {
                 ProductViewModels = Enumerable.Empty<ProductViewModel>(),
                 FacetGroups = Enumerable.Empty<FacetGroupOption>(),
-                SearchResult = new SearchResults(null, null)
-                {
-                    FacetGroups = Enumerable.Empty<ISearchFacetGroup>().ToArray()
-                }
             };
         }
 
@@ -249,8 +245,8 @@ namespace EPiServer.Reference.Commerce.Site.Features.Search.Services
 
             return new CustomSearchResult
             {
+                TotalCount = searchResult.TotalCount,
                 ProductViewModels = CreateProductViewModels(searchResult),
-                SearchResult = searchResult,
                 FacetGroups = facetGroups
             };
         }

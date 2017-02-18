@@ -34,18 +34,6 @@ namespace EPiServer.Reference.Commerce.Site.Tests.Features.Search
 
             result.ProductViewModels.Should().BeEmpty();
             result.FacetGroups.Should().BeEmpty();
-            result.SearchResult.FacetGroups.Should().BeEmpty();
-        }
-
-        [Fact]
-        public void Search_ShouldReturnSameSearchResult()
-        {
-            var content = new NodeContent();
-            var filterOptions = new FilterOptionViewModel { FacetGroups = new List<FacetGroupOption>() };
-
-            var result = _subject.Search(content, filterOptions);
-
-            result.SearchResult.ShouldBeEquivalentTo(_searchResultsMock.Object);
         }
 
         [Fact]
