@@ -1,7 +1,7 @@
 ﻿var Search = {
     init: function() {
         $(document)
-            .on('keyup', '.jsQuickSearch', Search.quickSearch)
+            .on('keyup', '.jsQuickSearch', $.debounce(500, Search.quickSearch))
             .on('focus', '.jsQuickSearch, .jsQuickSearchResult', Search.showResults)
             .on('focusin.jsQuickSearchResult click.jsQuickSearchResult', function (e) {
                 if ($(e.target).closest('.jsQuickSearchResult, .jsQuickSearch').length) return;
@@ -33,7 +33,7 @@
     lastPage: false,
     lastKeyWord: "",
     quickSearch: function() {
-        if ($(this).val().length > 1 && Search.lastKeyWord != $(this).val()) {
+        if ($(this).val().length > 3 && Search.lastKeyWord != $(this).val()) {
             var url = $(this).data('url');
             var form = $(this).closest('form');
             var jqXhr = $(this).data('jqXhr');

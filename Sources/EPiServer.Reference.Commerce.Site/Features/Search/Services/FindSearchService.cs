@@ -33,35 +33,57 @@ using SortOrder = EPiServer.Reference.Commerce.Site.Features.Search.Models.SortO
 
 namespace EPiServer.Reference.Commerce.Site.Features.Search.Services
 {
-    public class FindSearchService : SearchService
+    public class FindSearchService : ISearchService
     {
         private readonly SearchFacade _search;
         private readonly ICurrentMarket _currentMarket;
         private readonly ICurrencyService _currencyService;
         private readonly UrlResolver _urlResolver;
-        private readonly LanguageResolver _languageResolver;
-        private readonly IContentLoader _contentLoader;
-        private readonly LocalizationService _localizationService;
 
         public FindSearchService(ICurrentMarket currentMarket, ICurrencyService currencyService, UrlResolver urlResolver,
-            SearchFacade search, LanguageResolver languageResolver, IContentLoader contentLoader,
-            LocalizationService localizationService)
-            : base(
-                currentMarket, currencyService, urlResolver, search, languageResolver, contentLoader,
-                localizationService)
+            SearchFacade search)
         {
             _search = search;
             _currentMarket = currentMarket;
             _currencyService = currencyService;
             _urlResolver = urlResolver;
-            _languageResolver = languageResolver;
-            _contentLoader = contentLoader;
-            _localizationService = localizationService;
         }
 
         private static readonly int _defaultPageSize = 18;
 
-        public override CustomSearchResult Search(IContent currentContent, FilterOptionViewModel filterOptions)
+        public IEnumerable<ProductViewModel> QuickSearch(string query)
+        {
+            var filterOptions = new FilterOptionViewModel
+            {
+                Q = query,
+                PageSize = 5,
+                Sort = string.Empty
+            };
+            return QuickSearch(filterOptions);
+        }
+
+        public IEnumerable<ProductViewModel> QuickSearch(FilterOptionViewModel filterOptions)
+        {
+            if (String.IsNullOrEmpty(filterOptions.Q))
+            {
+                return Enumerable.Empty<ProductViewModel>();
+            }
+
+            var searchClient = SearchClient.Instance.Search<FashionProduct>();
+
+            var pageSize = filterOptions.PageSize > 0 ? filterOptions.PageSize : _defaultPageSize;
+
+            var query = searchClient.For(filterOptions.Q)
+                .InAllField()
+                .PublishedInCurrentLanguage()
+                .Take(pageSize);
+
+            var results = query.GetContentResult();
+
+            return CreateProductViewModels(results);
+        }
+
+        public CustomSearchResult Search(IContent currentContent, FilterOptionViewModel filterOptions)
         {
             var returnResult = new CustomSearchResult();
             var searchClient = SearchClient.Instance.Search<FashionProduct>();
@@ -145,11 +167,8 @@ namespace EPiServer.Reference.Commerce.Site.Features.Search.Services
             return returnResult;
         }
 
-        public override IEnumerable<SortOrder> GetSortOrder()
+        public IEnumerable<SortOrder> GetSortOrder()
         {
-            var market = _currentMarket.GetCurrentMarket();
-            var currency = _currencyService.GetCurrentCurrency();
-
             return new List<SortOrder>
             {
                 new SortOrder {Name = ProductSortOrder.PriceAsc, Key = "price", SortDirection = SortDirection.Ascending},
