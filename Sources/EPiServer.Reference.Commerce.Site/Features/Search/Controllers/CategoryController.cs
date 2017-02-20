@@ -21,12 +21,5 @@ namespace EPiServer.Reference.Commerce.Site.Features.Search.Controllers
             var model = _viewModelFactory.Create(currentContent, viewModel);
             return View(model);
         }
-
-        [ChildActionOnly]
-        public ActionResult Facet(FashionNode currentContent, FilterOptionViewModel viewModel)
-        {
-            var model = _viewModelFactory.Create(currentContent, viewModel);
-            return PartialView("_Facet", viewModel);
-        }
     }
 }

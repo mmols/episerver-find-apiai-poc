@@ -11,7 +11,7 @@
     <div class="row category-page">
         @using (Html.BeginForm("Index", "Category", FormMethod.Get, new { @class = "jsSearchForm" }))
         {
-            @Html.Action("Facet", new { Model.CurrentContent, Model.FilterOption })
+            @Html.Partial("_Facet", Model.FilterOption)
             <div class="col-sm-9">
                 <div class="container-fluid">
                     <div class="row">

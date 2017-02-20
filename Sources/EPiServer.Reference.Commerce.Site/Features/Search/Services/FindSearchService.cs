@@ -24,6 +24,7 @@ using EPiServer.Reference.Commerce.Site.Features.Search.Pages;
 using EPiServer.Reference.Commerce.Site.Features.Search.ViewModels;
 using EPiServer.Reference.Commerce.Site.Infrastructure.Facades;
 using EPiServer.Reference.Commerce.Site.Infrastructure.Indexing;
+using EPiServer.Util;
 using EPiServer.Web.Routing;
 using Mediachase.Commerce;
 using Mediachase.Search;
@@ -65,6 +66,7 @@ namespace EPiServer.Reference.Commerce.Site.Features.Search.Services
 
             var pageSize = filterOptions.PageSize > 0 ? filterOptions.PageSize : _defaultPageSize;
             var query = searchClient.For(filterOptions.Q)
+                .InAllField()
                 .TermsFacetFor(x => x.Gender())
                 .TermsFacetFor(x => x.CategoryCode())
                 .TermsFacetFor(x => x.Brand)
@@ -79,7 +81,6 @@ namespace EPiServer.Reference.Commerce.Site.Features.Search.Services
             }
 
             //TODO: Wire this up to be dynamic
-            //TODO: Change these filters to AND
             foreach (var filter in filterOptions.FacetGroups)
             {
                 var filterValue = filter.Facets.FirstOrDefault().Key;
@@ -88,13 +89,10 @@ namespace EPiServer.Reference.Commerce.Site.Features.Search.Services
                     case "AvailableColors":
                         query = query.Filter(x => x.AvailableColors.MatchCaseInsensitive(filterValue));
                         break;
-                    case "AvailableSizes":
-                        query = query.Filter(x => x.AvailableSizes.MatchCaseInsensitive(filterValue));
-                        break;
                     case "Brand":
                         query = query.Filter(x => x.Brand.MatchCaseInsensitive(filterValue));
                         break;
-                    case "GetGender":
+                    case "Gender":
                         query = query.Filter(x => x.Gender().MatchCaseInsensitive(filterValue));
                         break;
                     case "CategoryCode":
@@ -109,12 +107,12 @@ namespace EPiServer.Reference.Commerce.Site.Features.Search.Services
             foreach (var findFacet in results.Facets)
             {
                 var termFacet = findFacet as TermsFacet;
-                if (termFacet != null && termFacet.Terms.Count() > 0)
+                if (termFacet != null)
                 {
                     var facetGroupOption = new FacetGroupOption()
                     {
                         GroupFieldName = termFacet.Name,
-                        GroupName = termFacet.Name,
+                        GroupName = GetFriendlyFacetName(termFacet.Name),
                         Facets = termFacet.Terms.Select(x => new FacetOption()
                         {
                             Name = x.Term,
@@ -134,6 +132,19 @@ namespace EPiServer.Reference.Commerce.Site.Features.Search.Services
             return returnResult;
         }
 
+        private string GetFriendlyFacetName(string termFacetName)
+        {
+            switch (termFacetName)
+            {
+                case "CategoryCode":
+                    return "Category";
+                case "AvailableColors":
+                    return "Color";
+                default:
+                    return termFacetName;               
+            }
+        }
+
         private bool IsSelectedFacet(string facetGroup, string term, FilterOptionViewModel filterOptions)
         {
             var filterOption = filterOptions.FacetGroups.FirstOrDefault(x => x.GroupFieldName == facetGroup);
@@ -150,18 +161,14 @@ namespace EPiServer.Reference.Commerce.Site.Features.Search.Services
 
         private IEnumerable<ProductViewModel> CreateProductViewModels(IContentResult<FashionProduct> searchResults)
         {
-            var market = _currentMarket.GetCurrentMarket();
-            var currency = _currencyService.GetCurrentCurrency();
-
-            //Todo: Get the rest of the values
             return searchResults.Select(product => new ProductViewModel
             {
                 Brand = product.Brand,
                 Code = product.Code,
                 DisplayName = product.DisplayName,
                 ImageUrl = product.DefaultImageUrl(),
-                PlacedPrice = new Money(0, Currency.USD),
-                DiscountedPrice = new Money(0, Currency.USD),
+                PlacedPrice = product.DefaultPrice(),
+                DiscountedPrice = product.DiscountPrice(),
                 Url = _urlResolver.GetUrl(product.ContentLink),
                 IsAvailable = true
             });

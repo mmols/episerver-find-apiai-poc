@@ -24,16 +24,6 @@ namespace EPiServer.Reference.Commerce.Site.Tests.Features.Search.Controllers
         }
 
         [Fact]
-        public void Facet_ShouldReturnPartialView()
-        {
-            // Act
-            var result = _subject.Facet(null, null);
-
-            // Assert
-            Assert.IsType(typeof(PartialViewResult), result);
-        }
-
-        [Fact]
         public void Index_WhenPassingFashionNode_ShouldPassItOnToFactory()
         {
             // Arrange

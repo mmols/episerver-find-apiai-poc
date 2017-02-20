@@ -96,7 +96,7 @@
         var facets = [];
         $('.jsSearchFacet:input:checked').each(function () {
             var facetKey = $(this).data('facetkey');
-            var facetGroup = $(this).data('facetgroupname');
+            var facetGroup = $(this).data('facetgroupfield');
             var selectedFacet = encodeURIComponent(facetGroup + ":" + facetKey);
             facets.push(selectedFacet);
         });

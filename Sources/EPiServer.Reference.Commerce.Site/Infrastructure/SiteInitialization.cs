@@ -79,7 +79,9 @@ namespace EPiServer.Reference.Commerce.Site.Infrastructure
             SearchClient.Instance.Conventions
                 .ForInstancesOf<FashionProduct>()
                 .IncludeField(x => x.Gender())
-                .IncludeField(x => x.CategoryCode());
+                .IncludeField(x => x.CategoryCode())
+                .IncludeField(x => x.DefaultPrice())
+                .IncludeField(x => x.DiscountPrice());
 
             services.AddTransient<IOwinContext>(locator => HttpContext.Current.GetOwinContext());
             services.AddTransient<ApplicationUserManager>(locator => locator.GetInstance<IOwinContext>().GetUserManager<ApplicationUserManager>());

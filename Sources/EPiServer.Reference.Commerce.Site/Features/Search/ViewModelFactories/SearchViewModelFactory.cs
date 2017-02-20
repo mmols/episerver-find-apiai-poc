@@ -10,6 +10,9 @@ using ApiAiSDK;
 using ApiAiSDK.Model;
 using EPiServer.Reference.Commerce.Site.Features.Search.Models;
 using System.Configuration;
+using EPiServer.Reference.Commerce.Site.Features.Search.Pages;
+using EPiServer.Reference.Commerce.Site.Features.Start.Pages;
+using EPiServer.ServiceLocation;
 
 namespace EPiServer.Reference.Commerce.Site.Features.Search.ViewModelFactories
 {
@@ -17,11 +20,13 @@ namespace EPiServer.Reference.Commerce.Site.Features.Search.ViewModelFactories
     {
         private readonly ISearchService _searchService;
         private readonly LocalizationService _localizationService;
+        private readonly IContentLoader _contentLoader;
 
         public SearchViewModelFactory(LocalizationService localizationService, ISearchService searchService)
         {
             _searchService = searchService;
             _localizationService = localizationService;
+            _contentLoader = ServiceLocator.Current.GetInstance<IContentLoader>();
         }
 
         public virtual SearchViewModel<T> Create<T>(T currentContent, FilterOptionViewModel viewModel) where T : IContent
@@ -37,8 +42,9 @@ namespace EPiServer.Reference.Commerce.Site.Features.Search.ViewModelFactories
                 };
             }
 
-            if (!String.IsNullOrEmpty(viewModel.Q))
+            if (!String.IsNullOrEmpty(viewModel.Q) && AISearchIsEnabled())
             {
+                
                 var config = new AIConfiguration(ConfigurationManager.AppSettings["api-ai-key"], SupportedLanguage.English);
                 var apiAi = new ApiAi(config);
                 var response = apiAi.TextRequest(viewModel.Q);
@@ -71,6 +77,13 @@ namespace EPiServer.Reference.Commerce.Site.Features.Search.ViewModelFactories
                 ProductViewModels = customSearchResult.ProductViewModels,
                 FilterOption = viewModel
             };
+        }
+
+        private bool AISearchIsEnabled()
+        {
+            var startPage = _contentLoader.Get<StartPage>(ContentReference.StartPage);
+            var searchPage = _contentLoader.Get<SearchPage>(startPage.SearchPage);
+            return searchPage.EnableAiSearch;
         }
 
         private FacetGroupOption AddFacet(string facetName, string facetValue, FilterOptionViewModel viewModel)
