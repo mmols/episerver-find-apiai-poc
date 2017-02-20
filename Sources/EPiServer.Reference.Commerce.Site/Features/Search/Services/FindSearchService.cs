@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.Web.Helpers;
 using EPiServer.Commerce.Catalog.ContentTypes;
 using EPiServer.Core;
 using EPiServer.Find;
@@ -28,6 +29,7 @@ using EPiServer.Util;
 using EPiServer.Web.Routing;
 using Mediachase.Commerce;
 using Mediachase.Search;
+using SortOrder = EPiServer.Reference.Commerce.Site.Features.Search.Models.SortOrder;
 
 namespace EPiServer.Reference.Commerce.Site.Features.Search.Services
 {
@@ -80,7 +82,7 @@ namespace EPiServer.Reference.Commerce.Site.Features.Search.Services
                 query = query.Filter(x => x.Ancestors().Match(currentContent.ContentLink.ToReferenceWithoutVersion().ToString()));
             }
 
-            //TODO: Wire this up to be dynamic
+            //Pre-checked Facets
             foreach (var filter in filterOptions.FacetGroups)
             {
                 var filterValue = filter.Facets.FirstOrDefault().Key;
@@ -101,6 +103,17 @@ namespace EPiServer.Reference.Commerce.Site.Features.Search.Services
                 }
             }
 
+            //Sorting
+            var sortOrder = GetSortOrder().FirstOrDefault(x => x.Name.ToString() == filterOptions.Sort) ?? GetSortOrder().First();
+            switch (sortOrder.Name)
+            {
+                case ProductSortOrder.NewestFirst:
+                    query = query.OrderByDescending(x => x.Created);
+                    break;
+                case ProductSortOrder.PriceAsc:
+                    query = query.OrderBy(x => x.DiscountPrice().Amount);
+                    break;
+            }
 
             var results = query.GetContentResult();
             var returnFacets = new List<FacetGroupOption>();
@@ -131,6 +144,20 @@ namespace EPiServer.Reference.Commerce.Site.Features.Search.Services
             returnResult.TotalCount = results.SearchResult.TotalMatching;
             return returnResult;
         }
+
+        public override IEnumerable<SortOrder> GetSortOrder()
+        {
+            var market = _currentMarket.GetCurrentMarket();
+            var currency = _currencyService.GetCurrentCurrency();
+
+            return new List<SortOrder>
+            {
+                new SortOrder {Name = ProductSortOrder.PriceAsc, Key = "price", SortDirection = SortDirection.Ascending},
+                new SortOrder {Name = ProductSortOrder.Popularity, Key = "", SortDirection = SortDirection.Ascending},
+                new SortOrder {Name = ProductSortOrder.NewestFirst, Key = "created", SortDirection = SortDirection.Descending}
+            };
+        }
+
 
         private string GetFriendlyFacetName(string termFacetName)
         {

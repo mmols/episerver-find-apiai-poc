@@ -100,7 +100,7 @@ namespace EPiServer.Reference.Commerce.Site.Features.Search.Services
             }
         }
 
-        public IEnumerable<SortOrder> GetSortOrder()
+        public virtual IEnumerable<SortOrder> GetSortOrder()
         {
             var market = _currentMarket.GetCurrentMarket();
             var currency = _currencyService.GetCurrentCurrency();
