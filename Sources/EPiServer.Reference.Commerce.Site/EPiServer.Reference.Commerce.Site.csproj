@@ -452,6 +452,8 @@
     <Compile Include="Features\Product\Extensions\FashionProductExtensions.cs" />
     <Compile Include="Features\Profile\ViewModels\ProfilePageViewModel.cs" />
     <Compile Include="Features\ResetPassword\ViewModels\ResetPasswordMailPageViewModel.cs" />
+    <Compile Include="Features\Search\Models\ApiAiEntity.cs" />
+    <Compile Include="Features\Search\Models\SearchFilterField.cs" />
     <Compile Include="Features\Search\Services\FindSearchService.cs" />
     <Compile Include="Features\Shared\ViewModels\CountryRegionViewModel.cs" />
     <Compile Include="Features\ErrorHandling\Controllers\ErrorHandlingController.cs" />
@@ -813,6 +815,11 @@
     <Content Include="App_Data\GeoLiteCity.dat" />
     <Content Include="Views\Shared\_AuthorizePaymentMethod.cshtml" />
     <Content Include="Views\Shared\_AuthorizeConfirmation.cshtml" />
+    <Content Include="Features\Search\ApiAiExports\brand.json" />
+    <Content Include="Features\Search\ApiAiExports\color.json" />
+    <Content Include="Features\Search\ApiAiExports\gender.json" />
+    <Content Include="Features\Search\ApiAiExports\product-category.json" />
+    <Content Include="Features\Search\ApiAiExports\search-by-category.json" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

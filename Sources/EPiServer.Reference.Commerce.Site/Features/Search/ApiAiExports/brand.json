@@ -1,0 +1,22 @@
+{
+  "id": "364e1975-7a05-4d09-bffc-4ba21ba4a201",
+  "name": "brand",
+  "isOverridable": true,
+  "entries": [
+    {
+      "value": "Puma",
+      "synonyms": [
+        "Puma",
+        "Pumas"
+      ]
+    },
+    {
+      "value": "hanes",
+      "synonyms": [
+        "hanes"
+      ]
+    }
+  ],
+  "isEnum": false,
+  "automatedExpansion": true
+}

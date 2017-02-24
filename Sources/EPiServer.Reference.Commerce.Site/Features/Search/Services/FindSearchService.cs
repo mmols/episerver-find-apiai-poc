@@ -110,16 +110,16 @@ namespace EPiServer.Reference.Commerce.Site.Features.Search.Services
                 var filterValue = filter.Facets.FirstOrDefault().Key;
                 switch (filter.GroupFieldName)
                 {
-                    case "AvailableColors":
+                    case SearchFilterField.Color:
                         query = query.Filter(x => x.AvailableColors.MatchCaseInsensitive(filterValue));
                         break;
-                    case "Brand":
+                    case SearchFilterField.Brand:
                         query = query.Filter(x => x.Brand.MatchCaseInsensitive(filterValue));
                         break;
-                    case "Gender":
+                    case SearchFilterField.Gender:
                         query = query.Filter(x => x.Gender().MatchCaseInsensitive(filterValue));
                         break;
-                    case "CategoryCode":
+                    case SearchFilterField.Category:
                         query = query.Filter(x => x.CategoryCode().MatchCaseInsensitive(filterValue));
                         break;
                 }

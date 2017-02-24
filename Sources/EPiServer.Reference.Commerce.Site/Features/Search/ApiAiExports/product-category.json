@@ -1,0 +1,56 @@
+{
+  "id": "ca3daccc-65be-425b-9411-188e95b8ca66",
+  "name": "product-category",
+  "isOverridable": true,
+  "entries": [
+    {
+      "value": "shoes",
+      "synonyms": [
+        "shoes",
+        "kicks",
+        "sneakers"
+      ]
+    },
+    {
+      "value": "jackets",
+      "synonyms": [
+        "jackets"
+      ]
+    },
+    {
+      "value": "shirts",
+      "synonyms": [
+        "shirts",
+        "tshirts"
+      ]
+    },
+    {
+      "value": "sweatshirts",
+      "synonyms": [
+        "sweatshirts",
+        "hoodies"
+      ]
+    },
+    {
+      "value": "sweaters",
+      "synonyms": [
+        "sweaters"
+      ]
+    },
+    {
+      "value": "dresses",
+      "synonyms": [
+        "dress"
+      ]
+    },
+    {
+      "value": "handbags",
+      "synonyms": [
+        "handbag",
+        "handbags"
+      ]
+    }
+  ],
+  "isEnum": false,
+  "automatedExpansion": false
+}

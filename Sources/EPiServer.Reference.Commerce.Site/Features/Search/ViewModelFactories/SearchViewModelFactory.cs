@@ -52,10 +52,10 @@ namespace EPiServer.Reference.Commerce.Site.Features.Search.ViewModelFactories
                 if (response.Result.HasParameters)
                 {
                     viewModel.Q = String.Empty;
-                    AddFacet("AvailableColors", response.Result.GetStringParameter("color"), viewModel);
-                    AddFacet("Brand", response.Result.GetStringParameter("brand"), viewModel);
-                    AddFacet("Gender", response.Result.GetStringParameter("gender"), viewModel);
-                    AddFacet("CategoryCode", response.Result.GetStringParameter("product-category"), viewModel);
+                    AddFacet(SearchFilterField.Color, response.Result.GetStringParameter(ApiAiEntity.Color), viewModel);
+                    AddFacet(SearchFilterField.Brand, response.Result.GetStringParameter(ApiAiEntity.Brand), viewModel);
+                    AddFacet(SearchFilterField.Gender, response.Result.GetStringParameter(ApiAiEntity.Gender), viewModel);
+                    AddFacet(SearchFilterField.Category, response.Result.GetStringParameter(ApiAiEntity.Category), viewModel);
                 }
             }
 

@@ -1,0 +1,574 @@
+{
+  "templates": [
+    "@product-category:product-category that are @color:color that might be for @gender:gender ",
+    "@brand:brand that are @color:color by @brand:brand ",
+    "@color:color  @brand:brand  @product-category:product-category for @gender:gender ",
+    "@gender:gender  @color:color  @product-category:product-category ",
+    "@gender:gender \u0027s @color:color  @product-category:product-category ",
+    "@gender:gender \u0027s @product-category:product-category by @brand:brand ",
+    "@brand:brand  @product-category:product-category for @gender:gender ",
+    "@gender:gender  @product-category:product-category ",
+    "@color:color  @product-category:product-category ",
+    "@gender:gender  @product-category:product-category by @brand:brand that are @color:color ",
+    "@brand:brand for @gender:gender ",
+    "@product-category:product-category by @brand:brand that are @color:color ",
+    "@color:color  @brand:brand ",
+    "@color:color  @product-category:product-category by @brand:brand ",
+    "@color:color  @product-category:product-category ",
+    "@product-category:product-category for @gender:gender that are @color:color ",
+    "@gender:gender \u0027s @color:color  @product-category:product-category "
+  ],
+  "userSays": [
+    {
+      "id": "83b16d0e-be6c-4c81-b885-c6708ad388f2",
+      "data": [
+        {
+          "text": "shirts",
+          "alias": "product-category",
+          "meta": "@product-category",
+          "userDefined": false
+        },
+        {
+          "text": " that are "
+        },
+        {
+          "text": "black",
+          "alias": "color",
+          "meta": "@color",
+          "userDefined": false
+        },
+        {
+          "text": " that might be for "
+        },
+        {
+          "text": "guys",
+          "alias": "gender",
+          "meta": "@gender",
+          "userDefined": true
+        }
+      ],
+      "isTemplate": false,
+      "count": 0
+    },
+    {
+      "id": "08b74bae-7fc2-461f-b650-77bee882bd38",
+      "data": [
+        {
+          "text": "shoes",
+          "alias": "brand",
+          "meta": "@brand",
+          "userDefined": false
+        },
+        {
+          "text": " that are "
+        },
+        {
+          "text": "red",
+          "alias": "color",
+          "meta": "@color",
+          "userDefined": false
+        },
+        {
+          "text": " by "
+        },
+        {
+          "text": "Puma",
+          "alias": "brand",
+          "meta": "@brand",
+          "userDefined": true
+        }
+      ],
+      "isTemplate": false,
+      "count": 0
+    },
+    {
+      "id": "eab93650-70a8-40b0-b1aa-930ac18d7913",
+      "data": [
+        {
+          "text": "Black",
+          "alias": "color",
+          "meta": "@color",
+          "userDefined": false
+        },
+        {
+          "text": " "
+        },
+        {
+          "text": "Hanes",
+          "alias": "brand",
+          "meta": "@brand",
+          "userDefined": false
+        },
+        {
+          "text": " "
+        },
+        {
+          "text": "Shirts",
+          "alias": "product-category",
+          "meta": "@product-category",
+          "userDefined": true
+        },
+        {
+          "text": " for "
+        },
+        {
+          "text": "Men",
+          "alias": "gender",
+          "meta": "@gender",
+          "userDefined": false
+        }
+      ],
+      "isTemplate": false,
+      "count": 0
+    },
+    {
+      "id": "d7c1a4d9-6455-4306-8cc7-da148a38b52f",
+      "data": [
+        {
+          "text": "Womens",
+          "alias": "gender",
+          "meta": "@gender",
+          "userDefined": true
+        },
+        {
+          "text": " "
+        },
+        {
+          "text": "black",
+          "alias": "color",
+          "meta": "@color",
+          "userDefined": false
+        },
+        {
+          "text": " "
+        },
+        {
+          "text": "shirts",
+          "alias": "product-category",
+          "meta": "@product-category",
+          "userDefined": false
+        }
+      ],
+      "isTemplate": false,
+      "count": 1
+    },
+    {
+      "id": "b2b5ae17-c85f-4632-b259-d7e5b7d7d34a",
+      "data": [
+        {
+          "text": "Women",
+          "alias": "gender",
+          "meta": "@gender",
+          "userDefined": false
+        },
+        {
+          "text": "\u0027s "
+        },
+        {
+          "text": "black",
+          "alias": "color",
+          "meta": "@color",
+          "userDefined": false
+        },
+        {
+          "text": " "
+        },
+        {
+          "text": "shirts",
+          "alias": "product-category",
+          "meta": "@product-category",
+          "userDefined": false
+        }
+      ],
+      "isTemplate": false,
+      "count": 0
+    },
+    {
+      "id": "a34d6ea1-be42-4b25-9502-8e8ca4f669e1",
+      "data": [
+        {
+          "text": "Women",
+          "alias": "gender",
+          "meta": "@gender",
+          "userDefined": false
+        },
+        {
+          "text": "\u0027s "
+        },
+        {
+          "text": "shirts",
+          "alias": "product-category",
+          "meta": "@product-category",
+          "userDefined": false
+        },
+        {
+          "text": " by "
+        },
+        {
+          "text": "Hanes",
+          "alias": "brand",
+          "meta": "@brand",
+          "userDefined": false
+        }
+      ],
+      "isTemplate": false,
+      "count": 0
+    },
+    {
+      "id": "1138ebc1-287c-423c-9d2b-45b00fcdf585",
+      "data": [
+        {
+          "text": "Hanes",
+          "alias": "brand",
+          "meta": "@brand",
+          "userDefined": false
+        },
+        {
+          "text": " "
+        },
+        {
+          "text": "Shirts",
+          "alias": "product-category",
+          "meta": "@product-category",
+          "userDefined": false
+        },
+        {
+          "text": " for "
+        },
+        {
+          "text": "Men",
+          "alias": "gender",
+          "meta": "@gender",
+          "userDefined": false
+        }
+      ],
+      "isTemplate": false,
+      "count": 0
+    },
+    {
+      "id": "60341001-8014-48bd-8fa3-89c05e5eebf0",
+      "data": [
+        {
+          "text": "mens",
+          "alias": "gender",
+          "meta": "@gender",
+          "userDefined": false
+        },
+        {
+          "text": " "
+        },
+        {
+          "text": "shirts",
+          "alias": "product-category",
+          "meta": "@product-category",
+          "userDefined": false
+        }
+      ],
+      "isTemplate": false,
+      "count": 1
+    },
+    {
+      "id": "83aa89eb-1d98-4ad4-b940-27cd3dcad9f8",
+      "data": [
+        {
+          "text": "black",
+          "alias": "color",
+          "meta": "@color",
+          "userDefined": false
+        },
+        {
+          "text": " "
+        },
+        {
+          "text": "dresses",
+          "alias": "product-category",
+          "meta": "@product-category",
+          "userDefined": true
+        }
+      ],
+      "isTemplate": false,
+      "count": 0
+    },
+    {
+      "id": "d06e1dc4-7c71-4ad6-a976-aa9cba115aa5",
+      "data": [
+        {
+          "text": "mens",
+          "alias": "gender",
+          "meta": "@gender",
+          "userDefined": true
+        },
+        {
+          "text": " "
+        },
+        {
+          "text": "shoes",
+          "alias": "product-category",
+          "meta": "@product-category",
+          "userDefined": false
+        },
+        {
+          "text": " by "
+        },
+        {
+          "text": "puma",
+          "alias": "brand",
+          "meta": "@brand",
+          "userDefined": false
+        },
+        {
+          "text": " that are "
+        },
+        {
+          "text": "yellow",
+          "alias": "color",
+          "meta": "@color",
+          "userDefined": false
+        }
+      ],
+      "isTemplate": false,
+      "count": 0
+    },
+    {
+      "id": "c3812eb7-d42c-43fa-96da-dcef2ee6cdd5",
+      "data": [
+        {
+          "text": "pumas",
+          "alias": "brand",
+          "meta": "@brand",
+          "userDefined": false
+        },
+        {
+          "text": " for "
+        },
+        {
+          "text": "men",
+          "alias": "gender",
+          "meta": "@gender",
+          "userDefined": false
+        }
+      ],
+      "isTemplate": false,
+      "count": 0
+    },
+    {
+      "id": "6a8d2302-c6db-4002-8598-f2b35d61ae96",
+      "data": [
+        {
+          "text": "Shoes",
+          "alias": "product-category",
+          "meta": "@product-category",
+          "userDefined": false
+        },
+        {
+          "text": " by "
+        },
+        {
+          "text": "puma",
+          "alias": "brand",
+          "meta": "@brand",
+          "userDefined": false
+        },
+        {
+          "text": " that are "
+        },
+        {
+          "text": "yellow",
+          "alias": "color",
+          "meta": "@color",
+          "userDefined": false
+        }
+      ],
+      "isTemplate": false,
+      "count": 0
+    },
+    {
+      "id": "c13ce9de-d00b-4647-8152-1650ebb2a553",
+      "data": [
+        {
+          "text": "Yellow",
+          "alias": "color",
+          "meta": "@color",
+          "userDefined": false
+        },
+        {
+          "text": " "
+        },
+        {
+          "text": "Pumas",
+          "alias": "brand",
+          "meta": "@brand",
+          "userDefined": false
+        }
+      ],
+      "isTemplate": false,
+      "count": 0
+    },
+    {
+      "id": "77858185-32c6-4d22-9fa1-2a54f61019d2",
+      "data": [
+        {
+          "text": "Brown",
+          "alias": "color",
+          "meta": "@color",
+          "userDefined": false
+        },
+        {
+          "text": " "
+        },
+        {
+          "text": "shoes",
+          "alias": "product-category",
+          "meta": "@product-category",
+          "userDefined": false
+        },
+        {
+          "text": " by "
+        },
+        {
+          "text": "Puma",
+          "alias": "brand",
+          "meta": "@brand",
+          "userDefined": false
+        }
+      ],
+      "isTemplate": false,
+      "count": 0
+    },
+    {
+      "id": "6b4093f0-a65a-4a92-8270-451149e3c546",
+      "data": [
+        {
+          "text": "red",
+          "alias": "color",
+          "meta": "@color",
+          "userDefined": false
+        },
+        {
+          "text": " "
+        },
+        {
+          "text": "tshirt",
+          "alias": "product-category",
+          "meta": "@product-category",
+          "userDefined": false
+        }
+      ],
+      "isTemplate": false,
+      "count": 0
+    },
+    {
+      "id": "02788fc6-5891-4ef9-8608-d90ee5f9ffcd",
+      "data": [
+        {
+          "text": "shoes",
+          "alias": "product-category",
+          "meta": "@product-category",
+          "userDefined": false
+        },
+        {
+          "text": " for "
+        },
+        {
+          "text": "women",
+          "alias": "gender",
+          "meta": "@gender",
+          "userDefined": false
+        },
+        {
+          "text": " that are "
+        },
+        {
+          "text": "red",
+          "alias": "color",
+          "meta": "@color",
+          "userDefined": false
+        }
+      ],
+      "isTemplate": false,
+      "count": 1
+    },
+    {
+      "id": "066f3658-e7b4-46cc-b426-9b876140b11a",
+      "data": [
+        {
+          "text": "women",
+          "alias": "gender",
+          "meta": "@gender",
+          "userDefined": false
+        },
+        {
+          "text": "\u0027s "
+        },
+        {
+          "text": "red",
+          "alias": "color",
+          "meta": "@color",
+          "userDefined": false
+        },
+        {
+          "text": " "
+        },
+        {
+          "text": "shoes",
+          "alias": "product-category",
+          "meta": "@product-category",
+          "userDefined": false
+        }
+      ],
+      "isTemplate": false,
+      "count": 0
+    }
+  ],
+  "id": "16995c92-67ed-4cd5-afd5-868993f3296e",
+  "name": "search-by-category",
+  "auto": true,
+  "contexts": [],
+  "responses": [
+    {
+      "resetContexts": false,
+      "affectedContexts": [],
+      "parameters": [
+        {
+          "dataType": "@gender",
+          "name": "gender",
+          "value": "$gender",
+          "isList": false
+        },
+        {
+          "dataType": "@color",
+          "name": "color",
+          "value": "$color",
+          "isList": false
+        },
+        {
+          "dataType": "@product-category",
+          "name": "product-category",
+          "value": "$product-category",
+          "isList": false
+        },
+        {
+          "dataType": "@brand",
+          "name": "brand",
+          "value": "$brand",
+          "isList": true
+        }
+      ],
+      "messages": [
+        {
+          "type": 0,
+          "speech": []
+        }
+      ]
+    }
+  ],
+  "priority": 500000,
+  "cortanaCommand": {
+    "navigateOrService": "NAVIGATE",
+    "target": ""
+  },
+  "webhookUsed": false,
+  "webhookForSlotFilling": false,
+  "fallbackIntent": false,
+  "events": []
+}
